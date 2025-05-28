@@ -120,12 +120,12 @@ namespace Virtubank_Qesh_API.Commons.Shared.Helpers
             ms.Position = 0;
             using (GZipStream zip = new(ms, CompressionMode.Decompress))
             {
-                zip.Read(buffer, 0, buffer.Length);
+                zip.ReadExactly(buffer);
             }
             return Encoding.UTF8.GetString(buffer);
         }
 
-        public static string CapitalizeFullName(string fullName)
+        public static string? CapitalizeFullName(string fullName)
         {
             if (fullName == null)
                 return null;

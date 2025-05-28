@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using InitialSetupBackend.Shared.Middlewares;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
+using InitialSetupBackend.Interfaces;
+using InitialSetupBackend.Services;
 using InitialSetupBackend.Database;
-using Scalar.AspNetCore;
 using System.Text;
-using InitialSetupBackend.Shared.Middlewares;
 
 namespace InitialSetupBackend
 {
@@ -15,7 +16,7 @@ namespace InitialSetupBackend
         {
             var builder = WebApplication.CreateSlimBuilder(args);
 
-            builder.Services.AddOpenApi();
+            builder.Services.AddScoped<IAuthService, AuthService>();
 
             // Cors
             builder.Services.AddCors(options =>
@@ -64,15 +65,20 @@ namespace InitialSetupBackend
                    options.QueueLimit = 1;
                }));
 
+            builder.Services.AddLogging();
+            builder.Services.AddControllers();
+            builder.Services.AddAuthorization();
+
+
             var app = builder.Build();
 
             app.UseMiddleware<ExceptionMiddleware>();
-
-            if (app.Environment.IsDevelopment())
-            {
-                app.MapOpenApi();
-                app.MapScalarApiReference();
-            }
+            app.UseCors("AllowAllOrigins");
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseRateLimiter();
+            app.MapControllers();
+            app.UseRouting();
 
             app.Run();
         }

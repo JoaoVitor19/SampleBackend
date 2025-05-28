@@ -1,13 +1,11 @@
-﻿using Virtubank_Qesh_API.Commons.Shared.Helpers;
-using InitialSetupBackend.Shared.Exceptions;
+﻿using InitialSetupBackend.Shared.Exceptions;
+using InitialSetupBackend.Shared.Responses;
 using System.Net;
 
 namespace InitialSetupBackend.Shared.Middlewares
 {
     public class ExceptionMiddleware(RequestDelegate _next, ILogger<ExceptionMiddleware> logger)
     {
-        //[RequiresDynamicCode("")]
-        //[RequiresUnreferencedCode("")]
         public async Task InvokeAsync(HttpContext context)
         {
             try
@@ -29,14 +27,14 @@ namespace InitialSetupBackend.Shared.Middlewares
                     string? logErrorStackTrace = ex.StackTrace;
                     string? logErrorInnerException = ex.InnerException?.ToString();
                     logger.LogError("NotTratedError = Message = {Message}, StackTrace = {StackTrace}, InnerException = {InnerException}, Source = {Source}", logErrorMessage, logErrorStackTrace, logErrorInnerException, logErrorSource);
-                };
+                }
+                ;
 
-                var response = new
+                var response = new ExceptionResponse
                 {
                     ApiOnline = true,
-                    Error = errorMessage,
                     StatusCode = statusCode,
-                    ErrorTime = DateHelper.GetBrazilianTime(),
+                    ErrorMessage = errorMessage
                 };
 
                 await context.Response.WriteAsJsonAsync(response);
