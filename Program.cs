@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using InitialSetupBackend.Database;
 using Scalar.AspNetCore;
 using System.Text;
+using InitialSetupBackend.Shared.Middlewares;
 
 namespace InitialSetupBackend
 {
@@ -64,6 +65,8 @@ namespace InitialSetupBackend
                }));
 
             var app = builder.Build();
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             if (app.Environment.IsDevelopment())
             {
