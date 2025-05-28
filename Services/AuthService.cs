@@ -19,7 +19,7 @@ namespace InitialSetupBackend.Services
         public async Task<AuthResponse> AuthenticateAsync(AuthRequest request, CancellationToken cancellationToken)
         {
             var user = await context.Users.FirstOrDefaultAsync(x => !string.IsNullOrEmpty(x.Email) && x.Email.ToLower().Equals(request.Email.ToLower()), cancellationToken)
-                ?? throw new UnauthorizedException("Credênciais inválidas.");
+                ?? throw new UnauthorizedException("Invalid Credêntials");
 
             if (user.IsBlocked)
             {
@@ -32,17 +32,17 @@ namespace InitialSetupBackend.Services
 
             if (verifyPasswordHashResult != PasswordVerificationResult.Success)
             {
-                throw new UnauthorizedException("Credênciais inválidas.");
+                throw new UnauthorizedException("Invalid Credêntials");
             }
 
             if (user.ActivatedTwoFactor && (string.IsNullOrEmpty(request.Token) || request.Token.Length != 6))
             {
-                throw new UnauthorizedException("Informe o código de autenticação de dois fatores com 6 dígitos");
+                throw new UnauthorizedException("Provide two factor six digits code");
             }
 
             if (user.ActivatedTwoFactor && !ValidateToken(user.SecretTwoFactor!, request.Token!))
             {
-                throw new UnauthorizedException("O Token informado é inválido");
+                throw new UnauthorizedException("Provided two factor is invalid or expired");
             }
 
             var authClaims = new List<Claim>

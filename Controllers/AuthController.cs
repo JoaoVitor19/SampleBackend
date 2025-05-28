@@ -1,6 +1,5 @@
 ﻿using InitialSetupBackend.Shared.Responses;
 using InitialSetupBackend.Shared.Requests;
-using Microsoft.AspNetCore.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using InitialSetupBackend.Interfaces;
 using Microsoft.AspNetCore.Mvc;

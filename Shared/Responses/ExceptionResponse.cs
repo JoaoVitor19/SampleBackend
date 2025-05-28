@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace InitialSetupBackend.Shared.Responses
+﻿namespace InitialSetupBackend.Shared.Responses
 {
     public class ExceptionResponse
     {
