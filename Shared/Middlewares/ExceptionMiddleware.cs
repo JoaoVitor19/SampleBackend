@@ -28,9 +28,8 @@ namespace InitialSetupBackend.Shared.Middlewares
                     string? logErrorInnerException = ex.InnerException?.ToString();
                     logger.LogError("NotTratedError = Message = {Message}, StackTrace = {StackTrace}, InnerException = {InnerException}, Source = {Source}", logErrorMessage, logErrorStackTrace, logErrorInnerException, logErrorSource);
                 }
-                ;
 
-                var response = new ExceptionResponse
+                var response = new ExceptionResponses
                 {
                     ApiOnline = true,
                     StatusCode = statusCode,

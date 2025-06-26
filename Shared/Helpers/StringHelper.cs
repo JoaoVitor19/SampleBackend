@@ -1,7 +1,7 @@
 ﻿using System.IO.Compression;
 using System.Text;
 
-namespace Virtubank_Qesh_API.Commons.Shared.Helpers
+namespace InitialSetupBackend.Shared.Helpers
 {
     public class StringHelper
     {

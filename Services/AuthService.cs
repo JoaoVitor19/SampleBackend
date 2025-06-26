@@ -16,7 +16,7 @@ namespace InitialSetupBackend.Services
 {
     public class AuthService(AppDbContext context, IConfiguration configuration) : IAuthService
     {
-        public async Task<AuthResponse> AuthenticateAsync(AuthRequest request, CancellationToken cancellationToken)
+        public async Task<AuthResponses> AuthenticateAsync(AuthRequest request, CancellationToken cancellationToken)
         {
             var user = await context.Users.FirstOrDefaultAsync(x => !string.IsNullOrEmpty(x.Email) && x.Email.ToLower().Equals(request.Email.ToLower()), cancellationToken)
                 ?? throw new UnauthorizedException("Invalid Credêntials");
@@ -55,7 +55,7 @@ namespace InitialSetupBackend.Services
 
             var token = GenerateJwtToken(authClaims);
 
-            return new AuthResponse
+            return new AuthResponses
             {
                 AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
                 ExpiresIn = token.ValidTo,

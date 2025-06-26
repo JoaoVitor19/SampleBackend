@@ -19,8 +19,7 @@ namespace InitialSetupBackend.Database
                 Email = "admin@joaovitordev.pro",
                 Name = "Admin",
                 Role = "admin",
-                //"admin@jaodev123"
-                HashPassword = "AQAAAAIAAYagAAAAEJ4RSD8RguLszJU8rP8wWs2bhNPEPIsL0l/Bi3+NZbj1Mh59DdbBHLk/DakPMZI5Pg==",
+                HashPassword = "AQAAAAIAAYagAAAAEJ4RSD8RguLszJU8rP8wWs2bhNPEPIsL0l/Bi3+NZbj1Mh59DdbBHLk/DakPMZI5Pg==", //"admin@jaodev123"
                 CreatedAt = dateNow
             });
 
